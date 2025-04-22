@@ -8,6 +8,7 @@ from typing import Dict, List, Optional, Any, Union
 
 from langchain_core.language_models import BaseLLM
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_deepseek import ChatDeepSeek
 
 
 from config import config
@@ -21,20 +22,21 @@ class LLMProvider:
 
     def _init_llm(self) -> BaseLLM:
         """Initialize the appropriate language model based on config."""
-        if config.llm.model_name.lower() == "deepseek":
-            try:
-                # Try importing the DeepSeek integration
-                # If not available, this will raise ImportError
-                from langchain.llms import DeepSeek
 
-                return DeepSeek(
-                    api_key=config.llm.api_key,
-                    temperature=config.llm.temperature,
-                    max_tokens=config.llm.max_tokens,
-                )
-            except ImportError:
-                if config.debug:
-                    print("DeepSeek integration not found. Falling back to OpenAI.")
+        try:
+            # Try importing the DeepSeek integration
+            # If not available, this will raise ImportError
+
+            print("config.llm.api_key:", config.llm.api_key)
+            return ChatDeepSeek(
+                model=config.llm.model_name,
+                api_key=config.llm.api_key,
+                temperature=config.llm.temperature,
+                max_tokens=config.llm.max_tokens,
+            )
+        except ImportError:
+            if config.debug:
+                print("DeepSeek integration not found. Falling back to OpenAI.")
 
 
 

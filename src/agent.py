@@ -43,6 +43,7 @@ class AgentState(TypedDict):
 def parse_requirements(state: AgentState) -> AgentState:
     """Parse the user prompt to extract requirements for the UI layout."""
     prompt = state["prompt"]
+    print(f"Parsing requirements from prompt: {prompt}")
 
     # Use the LLM to extract structured requirements from the prompt
     requirement_prompt = ChatPromptTemplate.from_messages([
@@ -238,7 +239,7 @@ def should_export_to_figma(state: AgentState) -> str:
 
 
 # Build the agent graph
-def build_agent() -> StateGraph:
+def build_agent() :
     """Build the LangGraph workflow for the UI generation agent."""
     # Create a new graph
     workflow = StateGraph(AgentState)
@@ -271,7 +272,7 @@ def build_agent() -> StateGraph:
 
 # Create the agent with a memory saver for checkpointing
 memory = MemorySaver()
-ui_agent = build_agent().with_config(checkpointer=memory)
+ui_agent = build_agent()
 
 
 def generate_ui_from_prompt(prompt: str) -> Dict[str, Any]:
@@ -294,6 +295,7 @@ def generate_ui_from_prompt(prompt: str) -> Dict[str, Any]:
         "messages": [],
         "status": "started"
     }
+
 
     # Run the agent
     result = ui_agent.invoke(initial_state)
