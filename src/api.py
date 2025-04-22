@@ -4,14 +4,13 @@ This module implements a FastAPI server to expose the AI agent's
 functionality through a REST API.
 """
 
-import json
 from typing import Dict, Any, Optional
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from src.agent import generate_ui_from_prompt
-from src.config import config
+from agent import generate_ui_from_prompt
+from config import config
 
 
 # Define request and response models
@@ -78,6 +77,12 @@ async def health_check() -> Dict[str, str]:
 def start_server():
     """Start the API server."""
     import uvicorn
+    import sys
+    import os
+    # Add the project root to Python path
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(0, root_dir)
+
     uvicorn.run(
         "src.api:app",
         host="0.0.0.0",

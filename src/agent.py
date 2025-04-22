@@ -9,12 +9,12 @@ from typing import Any, Dict, List, TypedDict, Annotated
 
 from langchain_core.messages import SystemMessage, HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langgraph.checkpoint import MemorySaver
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, StateGraph
 
-from src.config import config
-from src.llm import llm_provider
-from src.figma_api import figma_api
+from config import config
+from llm import llm_provider
+from figma_api import figma_api
 
 
 # Define the state schema for our agent

@@ -6,8 +6,7 @@ This module provides the main entry point and API for the AI agent.
 import json
 from typing import Any, Dict, Optional
 
-from src.agent import generate_ui_from_prompt
-from src.config import config
+from agent import generate_ui_from_prompt
 
 
 def generate_ui_layout(prompt: str, output_json: bool = False) -> Dict[str, Any]:

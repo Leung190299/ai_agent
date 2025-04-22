@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional
 
 import requests
 
-from src.config import config
+from config import config
 
 
 class FigmaAPI:

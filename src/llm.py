@@ -8,9 +8,9 @@ from typing import Dict, List, Optional, Any, Union
 
 from langchain_core.language_models import BaseLLM
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
 
-from src.config import config
+
+from config import config
 
 class LLMProvider:
     """Provider class for language model interactions."""
@@ -36,21 +36,7 @@ class LLMProvider:
                 if config.debug:
                     print("DeepSeek integration not found. Falling back to OpenAI.")
 
-                # Fall back to OpenAI if DeepSeek integration is not available
-                return ChatOpenAI(
-                    api_key=config.llm.api_key,
-                    model_name="gpt-4",
-                    temperature=config.llm.temperature,
-                    max_tokens=config.llm.max_tokens,
-                )
-        else:
-            # Default to OpenAI
-            return ChatOpenAI(
-                api_key=config.llm.api_key,
-                model_name="gpt-4",
-                temperature=config.llm.temperature,
-                max_tokens=config.llm.max_tokens,
-            )
+
 
     def generate_ui_layout(self, prompt: str) -> Dict[str, Any]:
         """Generate UI layout based on the prompt.
